@@ -10,4 +10,10 @@ public class ParkingLotTest {
         boolean isParked = parkingLot.parkCarForFlight();
         assertTrue(isParked);
     }
+    @Test
+    public void unParkCar_ShouldReturnTrue_ForEveryVehicle() {
+        ParkingLot parkingLot = new ParkingLot();
+        boolean unParked = parkingLot.unParkCar();
+        assertTrue(unParked);
+    }
 }
