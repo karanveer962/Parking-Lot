@@ -9,10 +9,12 @@ import static junit.framework.Assert.*;
 public class ParkingLotTest {
     private ParkingLot parkingLot;
     private AirportSecurity securityStaff;
+    private  ParkingLotOwner parkingLotOwner;
     @Before
     public void setUp() {
         securityStaff=new AirportSecurity();
-        parkingLot = new ParkingLot(securityStaff);
+        parkingLotOwner = new ParkingLotOwner();
+        parkingLot = new ParkingLot(securityStaff,parkingLotOwner);
     }
     @Test
     public void parkCarForFlight_ShouldReturnFalse_WhenLotCapacityIsZero() {
@@ -57,4 +59,16 @@ public class ParkingLotTest {
         parkingLot.parkCarForFlight();
         assertFalse(securityStaff.isNotified());  // Check if the security staff is notified
     }
+
+    //UC5
+    @Test
+    public void testNotifyOwner_ShouldReturnTrue_WhenSpaceIsAvailableAgain() {
+        for (int i = 1; i <= parkingLot.MAX_CAPACITY; i++) {
+            parkingLot.parkCarForFlight();
+        }
+        parkingLot.unParkCar();  // Unpark one car to create available space
+        assertTrue(parkingLotOwner.isNotified());  // Check if the parking lot owner is notified
+    }
+
+
 }

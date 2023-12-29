@@ -1,11 +1,13 @@
 package org.example;
 public class ParkingLot {
     private AirportSecurity securityStaff;
+    private ParkingLotOwner parkingLotOwner;
     public int MAX_CAPACITY = 10;
     public int count=0;
 
-    public ParkingLot(AirportSecurity staff){
+    public ParkingLot(AirportSecurity staff,ParkingLotOwner owner){
         this.securityStaff=staff;
+        this.parkingLotOwner=owner;
     }
     public boolean parkCarForFlight() {
         if(!isLotFull()) {
@@ -27,6 +29,7 @@ public class ParkingLot {
         else {
             System.out.println("Vehicle UnParked ✅");
             count--;
+            this.notifyOwnerIfSpaceAvailable();
             return true;
         }
     }
@@ -37,6 +40,11 @@ public class ParkingLot {
     private void notifySecurity() {
         if (securityStaff != null) {
             securityStaff.notifyLotFull();
+        }
+    }
+    private void notifyOwnerIfSpaceAvailable() {
+        if (parkingLotOwner != null && !isLotFull()) {
+            parkingLotOwner.notifySpaceAvailable();
         }
     }
 }
