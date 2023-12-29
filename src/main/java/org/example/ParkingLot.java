@@ -2,12 +2,18 @@ package org.example;
 public class ParkingLot {
     private AirportSecurity securityStaff;
     private ParkingLotOwner parkingLotOwner;
+    private ParkingAttendant parkingAttendant;
     public int MAX_CAPACITY = 10;
     public int count=0;
 
-    public ParkingLot(AirportSecurity staff,ParkingLotOwner owner){
+    public void setSecurityStaff(AirportSecurity staff){
         this.securityStaff=staff;
-        this.parkingLotOwner=owner;
+    }
+    public void setParkingLotOwner(ParkingLotOwner parkingLotOwner) {
+        this.parkingLotOwner = parkingLotOwner;
+    }
+    public void setParkingAttendant(ParkingAttendant parkingAttendant) {
+        this.parkingAttendant = parkingAttendant;
     }
     public boolean parkCarForFlight() {
         if(!isLotFull()) {
