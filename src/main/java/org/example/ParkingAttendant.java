@@ -5,10 +5,10 @@ public class ParkingAttendant {
      public  ParkingAttendant(ParkingLot parkingLot){
           this.parkingLot=parkingLot;
       }
-    public boolean parkCarForFlight() {
-        return parkingLot.parkCarForFlight();
+    public boolean parkCarForFlight(String carNo) {
+        return parkingLot.parkCarForFlight(carNo);
     }
-    public boolean unParkCar(){
-         return parkingLot.unParkCar();
+    public boolean unParkCar(String carNo){
+         return parkingLot.unParkCar(carNo);
     }
 }

@@ -24,27 +24,27 @@ public class ParkingLotTest {
     @Test
     public void parkCarForFlight_ShouldReturnFalse_WhenLotCapacityIsZero() {
         parkingLot.MAX_CAPACITY=0;
-        boolean isParked = parkingAttendant.parkCarForFlight();
+        boolean isParked = parkingAttendant.parkCarForFlight("car1");
         assertFalse(isParked);
         assertEquals(0,parkingLot.count);
     }
     @Test
     public void parkCarForFlight_ShouldReturnTrue_WhenLotCapacityIsMoreThanCount() {
-        boolean isParked = parkingAttendant.parkCarForFlight();
+        boolean isParked = parkingAttendant.parkCarForFlight("car1");
         assertTrue(isParked);
         assertEquals(1,parkingLot.count);
     }
     @Test
     public void unParkCar_ShouldReturnTrue_WhenLotHasSomeCars() {
-        parkingAttendant.parkCarForFlight();
-        parkingAttendant.parkCarForFlight();
-        boolean unParked = parkingAttendant.unParkCar();
+        parkingAttendant.parkCarForFlight("car1");
+        parkingAttendant.parkCarForFlight("car2");
+        boolean unParked = parkingAttendant.unParkCar("car1");
         assertTrue(unParked);
         assertEquals(1,parkingLot.count);
     }
     @Test
     public void unParkCar_ShouldReturnFalse_WhenNoCarIsPresent() {
-        boolean unParked = parkingAttendant.unParkCar();
+        boolean unParked = parkingAttendant.unParkCar("car1");
         assertFalse(unParked);
         assertEquals(0,parkingLot.count);
     }
@@ -53,15 +53,16 @@ public class ParkingLotTest {
     @Test
     public void testNotifySecurity_ShouldReturnTrue_WhenLotIsFull() {
         for (int i = 1; i <= parkingLot.MAX_CAPACITY; i++) {
-            parkingAttendant.parkCarForFlight();
+            String str="Car"+i;
+            parkingAttendant.parkCarForFlight(str);
         }
-        boolean isParked = parkingAttendant.parkCarForFlight();
+        boolean isParked = parkingAttendant.parkCarForFlight("car11");
         assertFalse(isParked);
         assertTrue(securityStaff.isNotified());  // Check if the security staff is notified
     }
     @Test
     public void testNotifySecurity_ShouldReturnFalse_WhenLotIsNotFull() {
-        parkingAttendant.parkCarForFlight();
+        parkingAttendant.parkCarForFlight("car1");
         assertFalse(securityStaff.isNotified());  // Check if the security staff is notified
     }
 
@@ -69,10 +70,10 @@ public class ParkingLotTest {
     @Test
     public void testNotifyOwner_ShouldReturnTrue_WhenSpaceIsAvailableAgain() {
         for (int i = 1; i <= parkingLot.MAX_CAPACITY; i++) {
-            parkingAttendant.parkCarForFlight();
+            String str="Car"+i;
+            parkingAttendant.parkCarForFlight(str);
         }
-        parkingAttendant.unParkCar();  // Unpark one car to create available space
+        parkingAttendant.unParkCar("Car10");  // Unpark one car to create available space
         assertTrue(parkingLotOwner.isNotified());  // Check if the parking lot owner is notified
     }
-
 }
