@@ -8,9 +8,11 @@ import static junit.framework.Assert.*;
 
 public class ParkingLotTest {
     private ParkingLot parkingLot;
+    private AirportSecurity securityStaff;
     @Before
     public void setUp() {
-        parkingLot = new ParkingLot();
+        securityStaff=new AirportSecurity();
+        parkingLot = new ParkingLot(securityStaff);
     }
     @Test
     public void parkCarForFlight_ShouldReturnFalse_WhenLotCapacityIsZero() {
@@ -38,5 +40,21 @@ public class ParkingLotTest {
         boolean unParked = parkingLot.unParkCar();
         assertFalse(unParked);
         assertEquals(0,parkingLot.count);
+    }
+
+    //UC-4
+    @Test
+    public void testNotifySecurity_ShouldReturnTrue_WhenLotIsFull() {
+        for (int i = 1; i <= parkingLot.MAX_CAPACITY; i++) {
+            parkingLot.parkCarForFlight();
+        }
+        boolean isParked = parkingLot.parkCarForFlight();
+        assertFalse(isParked);
+        assertTrue(securityStaff.isNotified());  // Check if the security staff is notified
+    }
+    @Test
+    public void testNotifySecurity_ShouldReturnFalse_WhenLotIsNotFull() {
+        parkingLot.parkCarForFlight();
+        assertFalse(securityStaff.isNotified());  // Check if the security staff is notified
     }
 }
