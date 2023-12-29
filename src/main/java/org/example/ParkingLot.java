@@ -1,15 +1,16 @@
 package org.example;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
-
+import java.util.Map;
 public class ParkingLot {
     private AirportSecurity securityStaff;
     private ParkingLotOwner parkingLotOwner;
     private ParkingAttendant parkingAttendant;
     public int MAX_CAPACITY = 10;
     public int count=0;
-    private Set<String> parkedCars = new HashSet<>();
+    private HashMap<String, Date> parkedCars = new HashMap<>();
 
     public void setSecurityStaff(AirportSecurity staff){
         this.securityStaff=staff;
@@ -20,9 +21,9 @@ public class ParkingLot {
     public void setParkingAttendant(ParkingAttendant parkingAttendant) {
         this.parkingAttendant = parkingAttendant;
     }
-    public boolean parkCarForFlight(String carNo) {
+    public boolean parkCarForFlight(String carNo, Date timestamp) {
         if(!isLotFull()) {
-            parkedCars.add(carNo);
+            parkedCars.put(carNo,timestamp);
             System.out.println("Vehicle Parked ✅");
             count++;
             return true;
@@ -34,7 +35,7 @@ public class ParkingLot {
         }
     }
     public boolean unParkCar(String carNo) {
-        if(count==0 || !parkedCars.contains(carNo)){
+        if(count==0 || !parkedCars.containsKey(carNo)){
             System.out.println("Error!!! No car in the Lot");
             return false;
         }
@@ -59,5 +60,8 @@ public class ParkingLot {
         if (parkingLotOwner != null && !isLotFull()) {
             parkingLotOwner.notifySpaceAvailable();
         }
+    }
+    public Date getTimestampForParkedCar(String carNo){
+        return parkedCars.getOrDefault(carNo, null);
     }
 }
