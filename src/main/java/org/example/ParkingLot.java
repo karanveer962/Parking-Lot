@@ -40,7 +40,7 @@ public class ParkingLot {
             return false;
         }
         else {
-            System.out.println(carNo +"UnParked ✅");
+            System.out.println(carNo +" UnParked ✅");
             parkedCars.remove(carNo);
             count--;
             this.notifyOwnerIfSpaceAvailable();

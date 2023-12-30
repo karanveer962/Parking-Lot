@@ -46,4 +46,25 @@ public class ParkingAttendant {
         }
         return minCarsLot;
     }
+
+    public boolean parkCarForHandicapDriver(String carNo,Date timestamp) {
+        ParkingLot nearestLot = findNearestParkingLot();
+        if (nearestLot != null) {
+            return nearestLot.parkCarForFlight(carNo,timestamp);
+        } else {
+            System.out.println("No available parking lots.");
+            return false;
+        }
+    }
+    private ParkingLot findNearestParkingLot() {
+        if (assignedParkingLots.isEmpty()) {
+            return null;
+        }
+
+       for(ParkingLot parkingLot: assignedParkingLots){
+           if(parkingLot.count < parkingLot.MAX_CAPACITY)
+               return parkingLot;
+       }
+        return null;
+    }
 }
