@@ -1,5 +1,6 @@
 package org.example;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,8 @@ public class ParkingLotTest {
         parkingLot = new ParkingLot();
         securityStaff=new AirportSecurity();
         parkingLotOwner = new ParkingLotOwner();
-        parkingAttendant= new ParkingAttendant(parkingLot);
+        parkingAttendant= new ParkingAttendant();
+        parkingAttendant.assignParkingLot(parkingLot);
         parkingLot.setParkingAttendant(parkingAttendant);
         parkingLot.setSecurityStaff(securityStaff);
         parkingLot.setParkingLotOwner(parkingLotOwner);
@@ -84,4 +86,24 @@ public class ParkingLotTest {
         Date timestamp = parkingAttendant.getTimestampForParkedCar("Car1");  // Get the timestamp when the car was parked
         assertNotNull(timestamp);    // Check if the timestamp is not null
     }
+    @Test
+    public void testEvenDistributionByParkingAttendant() {
+        ParkingLot parkingLot1 = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        // Set up the parking lots and parking attendant
+        parkingAttendant.assignParkingLot(parkingLot1);
+        parkingAttendant.assignParkingLot(parkingLot2);
+
+        // Park multiple cars using the attendant
+        parkingAttendant.parkCarForFlight("Driver1",  new Date());
+        parkingAttendant.parkCarForFlight("Driver2",  new Date());
+        parkingAttendant.parkCarForFlight("Driver3",  new Date());
+        parkingAttendant.parkCarForFlight("Driver4",  new Date());
+
+        assertEquals(2, parkingLot.count);
+        assertEquals(1, parkingLot1.count);
+        assertEquals(1, parkingLot2.count);
+    }
+
 }
