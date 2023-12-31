@@ -6,14 +6,22 @@ import java.util.List;
 
 public class ParkingAttendant {
 //    private ParkingLot parkingLot;
+
+    private String name;
+    public ParkingAttendant(String name){
+        this.name=name;
+    }
+    public String getName(){
+        return name;
+    }
     private List<ParkingLot> assignedParkingLots = new ArrayList<>();
     public void assignParkingLot(ParkingLot parkingLot) {
         assignedParkingLots.add(parkingLot);
     }
-    public boolean parkCarForFlight(String carNo,String colour,Date timestamp) {
+    public boolean parkCarForFlight(String carNo,String colour,String carMaker,Date timestamp) {
         ParkingLot selectedParkingLot = findParkingLotWithMinimumCars();
         if (selectedParkingLot != null) {
-            return selectedParkingLot.parkCarForFlight(carNo,colour,timestamp);
+            return selectedParkingLot.parkCarForFlight(carNo,colour,carMaker,timestamp,name);
         } else {
             System.out.println("No available parking lots.");
             return false;
@@ -47,10 +55,10 @@ public class ParkingAttendant {
         return minCarsLot;
     }
 
-    public boolean parkCarForHandicapDriver(String carNo,String colour,Date timestamp) {
+    public boolean parkCarForHandicapDriver(String carNo,String colour,String carMaker,Date timestamp) {
         ParkingLot nearestLot = findNearestParkingLot();
         if (nearestLot != null) {
-            return nearestLot.parkCarForFlight(carNo,colour,timestamp);
+            return nearestLot.parkCarForFlight(carNo,colour,carMaker,timestamp,name);
         } else {
             System.out.println("No available parking lots.");
             return false;

@@ -21,5 +21,13 @@ public class PoliceDepartment {
     public void setParkingLots(ParkingLot parkingLot){
            parkingLots.add(parkingLot);
     }
+
+    public List<ParkingRecord> findBlueToyotaCarsInfo() {
+        List<ParkingRecord> records=new ArrayList<>();
+        for(ParkingLot it:parkingLots) {
+            records.addAll(it.findBlueToyotaCarsInfo());
+        }
+        return records;
+    }
 }
 

@@ -19,9 +19,9 @@ public class ParkingLot {
     public void setParkingAttendant(ParkingAttendant parkingAttendant) {
         this.parkingAttendant = parkingAttendant;
     }
-    public boolean parkCarForFlight(String carNo,String colour,Date timestamp) {
+    public boolean parkCarForFlight(String carNo,String colour,String carMaker,Date timestamp,String attendant) {
         if(!isLotFull()) {
-            parkedCars.put(carNo,new ParkingRecord(carNo,colour,timestamp));
+            parkedCars.put(carNo,new ParkingRecord(carNo,colour,carMaker,timestamp,attendant));
             System.out.println("Vehicle Parked ✅");
             count++;
             return true;
@@ -77,5 +77,14 @@ public class ParkingLot {
                     cars.add(it);
             }
             return cars;
+    }
+
+    public List<ParkingRecord> findBlueToyotaCarsInfo() {
+        List<ParkingRecord> records=new ArrayList<>();
+        for(String it:parkedCars.keySet()){
+            if(parkedCars.get(it).getCarMaker().equalsIgnoreCase("toyota") && parkedCars.get(it).getColor().equalsIgnoreCase("blue"))
+                records.add(parkedCars.get(it));
+        }
+        return records;
     }
 }
