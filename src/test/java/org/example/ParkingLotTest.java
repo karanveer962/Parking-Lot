@@ -181,4 +181,25 @@ public class ParkingLotTest {
         assertEquals(1, records.size());
         assertTrue(records.get(0).getParkingAttendant().equalsIgnoreCase("raj"));
     }
+
+    @Test
+    public void testFindParkedBMWInfo() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        policeDepartment.setParkingLots(parkingLot);
+
+        // Park white cars in the lot
+        parkingAttendant.parkCarForFlight("Driver1","blue","BMW",new Date());
+        parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
+        parkingAttendant.parkCarForFlight("Driver3", "white" ,"BMW",new Date());
+        parkingAttendant.parkCarForFlight("Driver4","red","BMW", new Date());
+
+        // Find the location of parked white cars
+        List<String> records = policeDepartment.findParkedBMWInfo();
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertTrue(records.contains("Driver1"));
+        assertTrue(records.contains("Driver4"));
+
+    }
 }

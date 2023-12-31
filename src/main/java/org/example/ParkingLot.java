@@ -87,4 +87,13 @@ public class ParkingLot {
         }
         return records;
     }
+
+    public List<String> findParkedBMWInfo() {
+        List<String> cars=new ArrayList<>();
+        for(String it:parkedCars.keySet()){
+            if(parkedCars.get(it).getCarMaker().equalsIgnoreCase("BMW"))
+                cars.add(it);
+        }
+        return cars;
+    }
 }

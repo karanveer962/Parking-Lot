@@ -29,5 +29,12 @@ public class PoliceDepartment {
         }
         return records;
     }
+    public List<String> findParkedBMWInfo(){
+        List<String> cars = new ArrayList<>();
+        for(ParkingLot it:parkingLots) {
+            cars.addAll(it.findParkedBMWInfo());
+        }
+        return cars;
+    }
 }
 
