@@ -1,16 +1,14 @@
 package org.example;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
+
 public class ParkingLot {
     private AirportSecurity securityStaff;
     private ParkingLotOwner parkingLotOwner;
     private ParkingAttendant parkingAttendant;
     public int MAX_CAPACITY = 10;
     public int count=0;
-    private HashMap<String, Date> parkedCars = new HashMap<>();
+    private HashMap<String, ParkingRecord> parkedCars = new HashMap<>();
 
     public void setSecurityStaff(AirportSecurity staff){
         this.securityStaff=staff;
@@ -21,9 +19,9 @@ public class ParkingLot {
     public void setParkingAttendant(ParkingAttendant parkingAttendant) {
         this.parkingAttendant = parkingAttendant;
     }
-    public boolean parkCarForFlight(String carNo, Date timestamp) {
+    public boolean parkCarForFlight(String carNo,String colour,Date timestamp) {
         if(!isLotFull()) {
-            parkedCars.put(carNo,timestamp);
+            parkedCars.put(carNo,new ParkingRecord(carNo,colour,timestamp));
             System.out.println("Vehicle Parked ✅");
             count++;
             return true;
@@ -62,10 +60,22 @@ public class ParkingLot {
         }
     }
     public Date getTimestampForParkedCar(String carNo){
-        return parkedCars.getOrDefault(carNo, null);
+        if(parkedCars.containsKey(carNo))
+            return parkedCars.get(carNo).getTimestamp();
+        else
+        return null;
     }
 
     public int getNumberOfParkedCars() {
         return count;
+    }
+
+    public List<String> findLocationOfParkedWhiteCars(){
+        List<String> cars=new ArrayList<>();
+            for(String it:parkedCars.keySet()){
+                if(parkedCars.get(it).getColor().equalsIgnoreCase("white"))
+                    cars.add(it);
+            }
+            return cars;
     }
 }

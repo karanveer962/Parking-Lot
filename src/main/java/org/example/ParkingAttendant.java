@@ -10,10 +10,10 @@ public class ParkingAttendant {
     public void assignParkingLot(ParkingLot parkingLot) {
         assignedParkingLots.add(parkingLot);
     }
-    public boolean parkCarForFlight(String carNo,Date timestamp) {
+    public boolean parkCarForFlight(String carNo,String colour,Date timestamp) {
         ParkingLot selectedParkingLot = findParkingLotWithMinimumCars();
         if (selectedParkingLot != null) {
-            return selectedParkingLot.parkCarForFlight(carNo,timestamp);
+            return selectedParkingLot.parkCarForFlight(carNo,colour,timestamp);
         } else {
             System.out.println("No available parking lots.");
             return false;
@@ -47,10 +47,10 @@ public class ParkingAttendant {
         return minCarsLot;
     }
 
-    public boolean parkCarForHandicapDriver(String carNo,Date timestamp) {
+    public boolean parkCarForHandicapDriver(String carNo,String colour,Date timestamp) {
         ParkingLot nearestLot = findNearestParkingLot();
         if (nearestLot != null) {
-            return nearestLot.parkCarForFlight(carNo,timestamp);
+            return nearestLot.parkCarForFlight(carNo,colour,timestamp);
         } else {
             System.out.println("No available parking lots.");
             return false;
