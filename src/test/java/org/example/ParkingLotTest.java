@@ -168,15 +168,12 @@ public class ParkingLotTest {
 
         policeDepartment.setParkingLots(parkingLot);
 
-        // Park white cars in the lot
         parkingAttendant.parkCarForFlight("Driver1","blue","Toyota",new Date());
         parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
         parkingAttendant1.parkCarForFlight("Driver3", "white" ,"Mahindra",new Date());
         parkingAttendant1.parkCarForFlight("Driver4","red","Toyota", new Date());
 
-        // Find the location of parked white cars
         List<ParkingRecord> records = policeDepartment.findBlueToyotaCarsInfo();
-
         assertNotNull(records);
         assertEquals(1, records.size());
         assertTrue(records.get(0).getParkingAttendant().equalsIgnoreCase("raj"));
@@ -187,19 +184,34 @@ public class ParkingLotTest {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         policeDepartment.setParkingLots(parkingLot);
 
-        // Park white cars in the lot
         parkingAttendant.parkCarForFlight("Driver1","blue","BMW",new Date());
         parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
         parkingAttendant.parkCarForFlight("Driver3", "white" ,"BMW",new Date());
         parkingAttendant.parkCarForFlight("Driver4","red","BMW", new Date());
 
-        // Find the location of parked white cars
         List<String> records = policeDepartment.findParkedBMWInfo();
 
         assertNotNull(records);
         assertEquals(3, records.size());
         assertTrue(records.contains("Driver1"));
         assertTrue(records.contains("Driver4"));
+
+    }
+
+    @Test
+    public void testFindCarParkedLast30Minutes() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        policeDepartment.setParkingLots(parkingLot);
+
+        parkingAttendant.parkCarForFlight("Driver1","blue","BMW",new Date());
+        parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
+
+        List<String> records = policeDepartment.findCarsParkedLast30Minutes();
+
+        assertNotNull(records);
+        assertEquals(2, records.size());
+        assertTrue(records.contains("Driver1"));
+        assertTrue(records.contains("Driver2"));
 
     }
 }

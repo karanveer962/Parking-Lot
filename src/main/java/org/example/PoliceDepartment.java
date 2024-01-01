@@ -36,5 +36,13 @@ public class PoliceDepartment {
         }
         return cars;
     }
+
+    public List<String> findCarsParkedLast30Minutes(){
+        List<String> cars = new ArrayList<>();
+        for(ParkingLot it:parkingLots) {
+            cars.addAll(it.findCarParkedLast30Minutes());
+        }
+        return cars;
+    }
 }
 

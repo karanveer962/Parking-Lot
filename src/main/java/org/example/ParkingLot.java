@@ -96,4 +96,19 @@ public class ParkingLot {
         }
         return cars;
     }
+
+    public List<String> findCarParkedLast30Minutes() {
+        List<String> cars = new ArrayList<>();
+        long currentTime = new Date().getTime();
+
+        for (Map.Entry<String, ParkingRecord> entry : parkedCars.entrySet()) {
+            long timeDifference = currentTime - entry.getValue().getTimestamp().getTime();
+            long minutesDifference = timeDifference / (60 * 1000);
+
+            if (minutesDifference <= 30) {
+                cars.add(entry.getKey());
+            }
+        }
+        return cars;
+    }
 }
