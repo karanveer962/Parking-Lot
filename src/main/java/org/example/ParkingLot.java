@@ -143,4 +143,8 @@ public class ParkingLot {
         }
         return cars;
     }
+
+    public List<String> getAllParkedCarsInfo() {
+        return new ArrayList<>(parkedCars.keySet());
+    }
 }

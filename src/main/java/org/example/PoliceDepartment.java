@@ -52,5 +52,13 @@ public class PoliceDepartment {
         }
         return cars;
     }
+
+    public List<String> getAllParkedCarsInfo(){
+        List<String> cars = new ArrayList<>();
+        for(ParkingLot it:parkingLots) {
+                cars.addAll(it.getAllParkedCarsInfo());
+        }
+        return cars;
+    }
 }
 

@@ -239,4 +239,30 @@ public class ParkingLotTest {
        assertTrue(carsOnRowB.isEmpty());
        assertTrue(carsOnRowD.contains("Driver4"));
     }
+
+    @Test
+    public void getAllParkedCarsInfo_ShouldReturnCorrectInfo() {
+        ParkingLot parkingLot1 = new ParkingLot("B");
+        ParkingLot parkingLot2 = new ParkingLot("C");
+        ParkingLot parkingLot3 = new ParkingLot("D");
+        parkingAttendant.assignParkingLot(parkingLot1);
+        parkingAttendant.assignParkingLot(parkingLot2);
+        parkingAttendant.assignParkingLot(parkingLot3);
+        parkingAttendant.parkCarForFlight("Driver1","blue","BMW",new Date());
+        parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
+        parkingAttendant.parkCarForFlight("Driver3", "white" ,"BMW",new Date(),true);
+        parkingAttendant.parkCarForFlight("Driver4","red","BMW", new Date(),true);
+
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        policeDepartment.setParkingLots(parkingLot);
+        policeDepartment.setParkingLots(parkingLot1);
+        policeDepartment.setParkingLots(parkingLot2);
+        policeDepartment.setParkingLots(parkingLot3);
+
+        List<String> cars=policeDepartment.getAllParkedCarsInfo();
+        assertNotNull(cars);
+        assertEquals(4,cars.size());
+        assertTrue(cars.contains("Driver1"));
+        assertTrue(cars.contains("Driver2"));
+    }
 }
