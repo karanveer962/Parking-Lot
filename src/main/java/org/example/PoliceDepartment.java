@@ -44,5 +44,13 @@ public class PoliceDepartment {
         }
         return cars;
     }
+    public List<String> findSmallHandicapCarsOnRows(String row){
+        List<String> cars = new ArrayList<>();
+        for(ParkingLot it:parkingLots) {
+            if(it.getName().equalsIgnoreCase(row))
+                cars.addAll(it.findSmallHandicapCarsOnRows());
+        }
+        return cars;
+    }
 }
 

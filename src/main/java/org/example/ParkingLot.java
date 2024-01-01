@@ -3,12 +3,22 @@ package org.example;
 import java.util.*;
 
 public class ParkingLot {
+    private String name;
     private AirportSecurity securityStaff;
     private ParkingLotOwner parkingLotOwner;
     private ParkingAttendant parkingAttendant;
     public int MAX_CAPACITY = 10;
     public int count=0;
     private HashMap<String, ParkingRecord> parkedCars = new HashMap<>();
+
+
+    public ParkingLot(String name){
+        this.name=name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setSecurityStaff(AirportSecurity staff){
         this.securityStaff=staff;
@@ -22,6 +32,19 @@ public class ParkingLot {
     public boolean parkCarForFlight(String carNo,String colour,String carMaker,Date timestamp,String attendant) {
         if(!isLotFull()) {
             parkedCars.put(carNo,new ParkingRecord(carNo,colour,carMaker,timestamp,attendant));
+            System.out.println("Vehicle Parked ✅");
+            count++;
+            return true;
+        }
+        else{
+            System.out.println("Parking lot is full. Redirecting security staff...");
+            notifySecurity();
+            return false;
+        }
+    }
+    public boolean parkCarForFlight(String carNo,String colour,String carMaker,Date timestamp,String attendant,boolean handicapped) {
+        if(!isLotFull()) {
+            parkedCars.put(carNo,new ParkingRecord(carNo,colour,carMaker,timestamp,attendant,handicapped));
             System.out.println("Vehicle Parked ✅");
             count++;
             return true;
@@ -108,6 +131,15 @@ public class ParkingLot {
             if (minutesDifference <= 30) {
                 cars.add(entry.getKey());
             }
+        }
+        return cars;
+    }
+
+    public List<String> findSmallHandicapCarsOnRows() {
+        List<String> cars = new ArrayList<>();
+        for(String it:parkedCars.keySet()){
+            if(parkedCars.get(it).isHandicapped())
+                cars.add(it);
         }
         return cars;
     }

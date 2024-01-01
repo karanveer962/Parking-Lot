@@ -8,6 +8,7 @@ public class ParkingRecord {
     private String color;
     private Date timestamp;
     private String parkingAttendant;
+    private boolean handicapped;
 
     public ParkingRecord(String carNumber, String color,String carMaker, Date timestamp,String attendant) {
         this.carNumber = carNumber;
@@ -15,6 +16,15 @@ public class ParkingRecord {
         this.timestamp = timestamp;
         this.carMaker=carMaker;
         parkingAttendant=attendant;
+        this.handicapped=false;
+    }
+    public ParkingRecord(String carNumber, String color,String carMaker, Date timestamp,String attendant,boolean handicapped) {
+        this.carNumber = carNumber;
+        this.color = color;
+        this.timestamp = timestamp;
+        this.carMaker=carMaker;
+        parkingAttendant=attendant;
+        this.handicapped=handicapped;
     }
 
     public String getCarNumber() {
@@ -31,5 +41,9 @@ public class ParkingRecord {
     public String getCarMaker(){return carMaker;}
     public String getParkingAttendant(){
         return parkingAttendant;
+    }
+
+    public boolean isHandicapped() {
+        return handicapped;
     }
 }

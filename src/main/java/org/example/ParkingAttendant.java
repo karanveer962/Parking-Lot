@@ -27,6 +27,15 @@ public class ParkingAttendant {
             return false;
         }
     }
+    public boolean parkCarForFlight(String carNo,String colour,String carMaker,Date timestamp,boolean handicap) {
+        ParkingLot selectedParkingLot = findParkingLotWithMinimumCars();
+        if (selectedParkingLot != null) {
+            return selectedParkingLot.parkCarForFlight(carNo,colour,carMaker,timestamp,name,handicap);
+        } else {
+            System.out.println("No available parking lots.");
+            return false;
+        }
+    }
     public boolean unParkCar(String carNo){
         for (ParkingLot parkingLot : assignedParkingLots) {
               if(parkingLot.unParkCar(carNo))

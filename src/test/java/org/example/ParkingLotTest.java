@@ -17,7 +17,7 @@ public class ParkingLotTest {
     private ParkingAttendant parkingAttendant ;
     @Before
     public void setUp() {
-        parkingLot = new ParkingLot();
+        parkingLot = new ParkingLot("A");
         securityStaff=new AirportSecurity();
         parkingLotOwner = new ParkingLotOwner();
         parkingAttendant= new ParkingAttendant("Raj");
@@ -89,8 +89,8 @@ public class ParkingLotTest {
     }
     @Test
     public void testEvenDistributionByParkingAttendant() {
-        ParkingLot parkingLot1 = new ParkingLot();
-        ParkingLot parkingLot2 = new ParkingLot();
+        ParkingLot parkingLot1 = new ParkingLot("B");
+        ParkingLot parkingLot2 = new ParkingLot("C");
 
         // Set up the parking lots and parking attendant
         parkingAttendant.assignParkingLot(parkingLot1);
@@ -109,8 +109,8 @@ public class ParkingLotTest {
 
     @Test
     public void testParkCarForHandicapDriver() {
-        ParkingLot parkingLot1 = new ParkingLot();
-        ParkingLot parkingLot2 = new ParkingLot();
+        ParkingLot parkingLot1 = new ParkingLot("B");
+        ParkingLot parkingLot2 = new ParkingLot("C");
 
         parkingLot.MAX_CAPACITY=2;
         parkingLot1.MAX_CAPACITY=1;
@@ -136,8 +136,8 @@ public class ParkingLotTest {
     @Test
     public void testFindLocationOfParkedWhiteCars_ShouldReturn2WhiteCarsLocation() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
-        ParkingLot parkingLot1 = new ParkingLot();
-        ParkingLot parkingLot2 = new ParkingLot();
+        ParkingLot parkingLot1 = new ParkingLot("B");
+        ParkingLot parkingLot2 = new ParkingLot("C");
 
         policeDepartment.setParkingLots(parkingLot);
         policeDepartment.setParkingLots(parkingLot1);
@@ -213,5 +213,30 @@ public class ParkingLotTest {
         assertTrue(records.contains("Driver1"));
         assertTrue(records.contains("Driver2"));
 
+    }
+
+    @Test
+    public void findSmallHandicapCarsOnRowsBD_ShouldReturnCorrectInfo(){
+        ParkingLot parkingLot1 = new ParkingLot("B");
+        ParkingLot parkingLot2 = new ParkingLot("C");
+        ParkingLot parkingLot3 = new ParkingLot("D");
+        parkingAttendant.assignParkingLot(parkingLot1);
+        parkingAttendant.assignParkingLot(parkingLot2);
+        parkingAttendant.assignParkingLot(parkingLot3);
+        parkingAttendant.parkCarForFlight("Driver1","blue","BMW",new Date());
+        parkingAttendant.parkCarForFlight("Driver2", "green" ,"Hyundai",new Date());
+        parkingAttendant.parkCarForFlight("Driver3", "white" ,"BMW",new Date(),true);
+        parkingAttendant.parkCarForFlight("Driver4","red","BMW", new Date(),true);
+
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        policeDepartment.setParkingLots(parkingLot);
+        policeDepartment.setParkingLots(parkingLot1);
+        policeDepartment.setParkingLots(parkingLot2);
+        policeDepartment.setParkingLots(parkingLot3);
+
+       List<String> carsOnRowB= policeDepartment.findSmallHandicapCarsOnRows("B");
+       List<String> carsOnRowD= policeDepartment.findSmallHandicapCarsOnRows("D");
+       assertTrue(carsOnRowB.isEmpty());
+       assertTrue(carsOnRowD.contains("Driver4"));
     }
 }
